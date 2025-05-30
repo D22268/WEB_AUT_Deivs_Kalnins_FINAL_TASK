@@ -12,9 +12,9 @@ describe('Automation Practice Form', () => {
       }
     });
 
-    cy.get('#firstName').type('John');
-    cy.get('#lastName').type('Doe');
-    cy.get('#userEmail').type('john.doe@example.com');
+    cy.get('#firstName').type('Deivs');
+    cy.get('#lastName').type('Kalnins');
+    cy.get('#userEmail').type('Deivs.Kalnins@gmail.com');
     cy.get('input[name="gender"][value="Male"]').check({ force: true });
     cy.get('#userNumber').type('1234567890');
 
@@ -44,8 +44,8 @@ cy.get('.react-datepicker__day--028:not(.react-datepicker__day--outside-month)')
     cy.get('#submit').click();
     
     cy.get('.modal-content').should('be.visible');
-    cy.get('td').contains('John Doe').should('exist');
-    cy.get('td').contains('john.doe@example.com').should('exist');
+    cy.get('td').contains('Deivs Kalnins').should('exist');
+    cy.get('td').contains('Deivs.Kalnins@gmail.com').should('exist');
     cy.get('td').contains('Male').should('exist');
     cy.get('td').contains('1234567890').should('exist');
     cy.get('.modal-content').contains(/28\s*February,\s*1930/).should('exist');
