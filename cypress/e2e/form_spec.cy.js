@@ -12,49 +12,47 @@ describe('Automation Practice Form', () => {
       }
     });
 
-    // Fill out basic text fields
     cy.get('#firstName').type('John');
     cy.get('#lastName').type('Doe');
     cy.get('#userEmail').type('john.doe@example.com');
     cy.get('input[name="gender"][value="Male"]').check({ force: true });
     cy.get('#userNumber').type('1234567890');
 
-    // Set Date of Birth
-    cy.get('#dateOfBirthInput').click();
-    cy.get('.react-datepicker__year-select').select('1930');
-    cy.get('.react-datepicker__month-select').select('February');
-    cy.contains('.react-datepicker__day--028', '28').click();
+cy.get('#dateOfBirthInput').click();
 
-    // Subject
+// Set Date of Birth to 28 February, 1930
+cy.get('#dateOfBirthInput').click();
+cy.get('.react-datepicker__year-select').select('1930');
+cy.wait(200); // Let the month dropdown render properly
+cy.get('.react-datepicker__month-select').select('February');
+cy.get('.react-datepicker__day--028:not(.react-datepicker__day--outside-month)').click();
+   
     cy.get('#subjectsInput').type('Economics{enter}');
-
-    // Hobbies
+    
     cy.contains('label', 'Music').click();
-
-    // File Upload
-    cy.get('input#uploadPicture').selectFile('image/Nature.jpg');
-
-    // Current Address
-    cy.get('#currentAddress').type('123 Demo Street, Testville');
-
-    // State and City
+    
+    cy.get('input#uploadPicture').selectFile('files/Nature.jpg');
+    
+    cy.get('#currentAddress').type('1234 Bee Street, Waspvile');
+    
+    cy.get('#state').click();
     cy.get('#react-select-3-input').type('NCR{enter}');
+
+    cy.get('#city').click();
     cy.get('#react-select-4-input').type('Delhi{enter}');
-
-    // Submit
+    
     cy.get('#submit').click();
-
-    // Validation of Modal
+    
     cy.get('.modal-content').should('be.visible');
     cy.get('td').contains('John Doe').should('exist');
     cy.get('td').contains('john.doe@example.com').should('exist');
     cy.get('td').contains('Male').should('exist');
     cy.get('td').contains('1234567890').should('exist');
-    cy.get('td').contains('28 February,1930').should('exist');
+    cy.get('.modal-content').contains(/28\s*February,\s*1930/).should('exist');
     cy.get('td').contains('Economics').should('exist');
     cy.get('td').contains('Music').should('exist');
     cy.get('td').contains('Nature.jpg').should('exist');
-    cy.get('td').contains('123 Demo Street').should('exist');
+    cy.get('td').contains('1234 Bee Street').should('exist');
     cy.get('td').contains('NCR Delhi').should('exist');
   });
 });
